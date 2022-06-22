@@ -27,7 +27,7 @@ void setup() {
   prefs.begin("index", false);
 
   // Remove all preferences(logged values) under the opened namespace
-  prefs.clear(); // uncomment this to reset all values
+  // prefs.clear(); // uncomment this to reset all values
 }
 
 bool isPrime(int32_t N)
@@ -85,13 +85,13 @@ void loop()
   WiFi.begin("notarealssid","notarealpassword");
 
   // Do some calculations to increase power-draw
-  Serial.println("Calculating how many primes exist under 10,000,000... (15x)");
-  for (int j = 0; j < 15; ++j) {
+  Serial.println("Calculating how many primes exist under 10,000,000... (14x)");
+  for (int j = 0; j < 14; ++j) {
     Serial.println(countPrimes(10000000L));
   }
 
   // disable wifi so that we do not conflict with adc pins
   WiFi.disconnect();
   WiFi.mode(WIFI_OFF);
-  delay(1000 * 60);
+  delay(1000 * 42);
 }
