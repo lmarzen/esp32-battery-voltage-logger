@@ -1,1 +1,1 @@
-# esp32-data-logging-web-server
+# esp32-battery-voltage-logger
