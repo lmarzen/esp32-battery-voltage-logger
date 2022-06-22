@@ -3,6 +3,10 @@
 #include <nvs_flash.h>
 #include <WiFi.h>
 
+
+#define ADC_PIN 15
+#define MAX_READINGS 256
+
 Preferences prefs;
 
 // clear all non-volatile storage
@@ -11,9 +15,6 @@ void reformat_nvs() {
   nvs_flash_init(); // initialize the NVS partition.
   while(true);
 }
-
-#define MAX_READINGS 196
-
 
 void setup() {
   //esp_sleep_enable_timer_wakeup((60*30) * 1000000LL);
@@ -47,6 +48,7 @@ int32_t countPrimes(int32_t N)
     return cnt;
 }
 
+// Takes about 30 minutes for each loop
 void loop() 
 { 
   delay(1000);
@@ -57,7 +59,7 @@ void loop()
   prefs.getBytes("adc-log", adc_readings, sizeof(uint16_t) * MAX_READINGS);
 
   // Collect new adc sample
-  adc_readings[index] = analogRead(15);
+  adc_readings[index] = analogRead(ADC_PIN);
 
   // Print all readings to serial
   Serial.println("v---------------");
@@ -67,7 +69,7 @@ void loop()
   Serial.println("^---------------");
 
   if (index >= MAX_READINGS) {
-    Serial.println("MAX READINGS REACHED!!! going to sleep");
+    Serial.println("MAX READINGS REACHED!!! Going to sleep...");
     esp_sleep_enable_timer_wakeup((60*30) * 1000000LL);
     esp_deep_sleep_start();
   }
@@ -83,8 +85,8 @@ void loop()
   WiFi.begin("notarealssid","notarealpassword");
 
   // Do some calculations to increase power-draw
-  Serial.println("Calculating how many primes exist under 10,000,000... (10x)");
-  for (int j = 0; j < 30; ++j) {
+  Serial.println("Calculating how many primes exist under 10,000,000... (15x)");
+  for (int j = 0; j < 15; ++j) {
     Serial.println(countPrimes(10000000L));
   }
 
