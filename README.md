@@ -2,7 +2,7 @@
 
 A simple C++ program for the esp32 that logs battery voltage to non-volatile storage.
 
-This is useful to calculate a curve to convert battery voltage samples to battery life percentage.
+This is useful to calculate a voltage curve that can be used to more accurately convert between battery voltage and battery life percentage.
 
 Values are logged as 12-bit ADC samples (0-4095). These values can be converted to battery voltage with *math*.
 
