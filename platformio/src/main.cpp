@@ -3,8 +3,9 @@
 #include <nvs_flash.h>
 #include <WiFi.h>
 
-#define ADC_PIN 15
-#define MAX_READINGS 256
+#define ADC_PIN A0
+#define MAX_READINGS 256 // maximum number of samples that can be stored
+#define SAMPLE_FREQ 1 // sample frequency in minutes, must be a positive integer
 
 Preferences prefs;
 
@@ -52,6 +53,7 @@ int32_t countPrimes(int32_t N)
 // Takes about 30 minutes for each loop
 void loop()
 {
+  unsigned long startTime = millis();
   delay(1000);
 
   // Read existing values from non-volatile storage
@@ -63,6 +65,7 @@ void loop()
   adc_readings[index] = analogRead(ADC_PIN);
 
   // Print all readings to serial
+  Serial.println("ADC Reading History");
   Serial.println("v---------------");
   for (int i = 0; i <= index; ++i)
   {
@@ -88,14 +91,24 @@ void loop()
   WiFi.begin("notarealssid", "notarealpassword");
 
   // Do some calculations to increase power-draw
-  Serial.println("Calculating how many primes exist under 10,000,000... (14x)");
-  for (int j = 0; j < 14; ++j)
+  Serial.print("Calculating how many primes exist under 5,750,000... (x");
+  Serial.print(SAMPLE_FREQ);
+  Serial.println(")");
+  long primeTime = millis();
+  for (int j = 0; j < SAMPLE_FREQ; ++j)
   {
-    Serial.println(countPrimes(10000000L));
+    Serial.println(countPrimes(5750000L)); // takes ~58s for esp32 at 240MHz
   }
+  Serial.println("Time to calculate primes:" + String((millis() - primeTime) / 1000.0, 3) + "s");
 
   // disable wifi so that we do not conflict with adc pins
   WiFi.disconnect();
   WiFi.mode(WIFI_OFF);
-  delay(1000 * 42);
+
+  Serial.println("Calculations completed in: " + String((millis() - startTime) / 1000.0, 3) + "s");
+  // make sure that samples are taken exactly 30 minutes apart
+  unsigned long delayTime = (SAMPLE_FREQ * 60 * 1000) - (millis() - startTime);
+  Serial.println("Waiting: " + String(delayTime / 1000.0, 3) + "s...");
+  delay(delayTime);
+  Serial.println("Total loop time: " + String((millis() - startTime) / 1000.0, 3) + "s");
 }
