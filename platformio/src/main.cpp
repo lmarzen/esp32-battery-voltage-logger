@@ -3,7 +3,7 @@
 #include <nvs_flash.h>
 #include <WiFi.h>
 
-#define ADC_PIN A0
+#define ADC_PIN A2
 #define MAX_READINGS 256 // maximum number of samples that can be stored
 #define SAMPLE_FREQ 1 // sample frequency in minutes, must be a positive integer
 
@@ -30,6 +30,8 @@ void setup()
 
   // Remove all preferences(logged values) under the opened namespace
   // prefs.clear(); // uncomment this to reset all values
+  // Serial.println("Cleared prefs.");
+  // delay(10000);
 }
 
 bool isPrime(int32_t N)
