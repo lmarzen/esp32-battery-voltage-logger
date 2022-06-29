@@ -5,7 +5,7 @@
 
 #define ADC_PIN A2
 #define MAX_READINGS 256 // maximum number of samples that can be stored
-#define SAMPLE_FREQ 1 // sample frequency in minutes, must be a positive integer
+#define SAMPLE_FREQ 30 // sample frequency in minutes, must be a positive integer
 
 Preferences prefs;
 
