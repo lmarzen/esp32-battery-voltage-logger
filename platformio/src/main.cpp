@@ -4,7 +4,7 @@
 #include <WiFi.h>
 
 #define ADC_PIN A2
-#define MAX_READINGS 256 // maximum number of samples that can be stored
+#define MAX_READINGS 384 // maximum number of samples that can be stored
 #define SAMPLE_FREQ 30 // sample frequency in minutes, must be a positive integer
 
 Preferences prefs;
@@ -31,7 +31,7 @@ void setup()
   // Remove all preferences(logged values) under the opened namespace
   // prefs.clear(); // uncomment this to reset all values
   // Serial.println("Cleared prefs.");
-  // delay(10000);
+  // delay(20000);
 }
 
 bool isPrime(int32_t N)
