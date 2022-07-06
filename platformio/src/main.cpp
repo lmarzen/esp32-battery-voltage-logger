@@ -19,8 +19,8 @@ void reformat_nvs()
 
 void setup()
 {
-  // esp_sleep_enable_timer_wakeup((60*30) * 1000000LL);
-  // esp_deep_sleep_start();
+  esp_sleep_enable_timer_wakeup(60 * 30 * 1000000LL);
+  esp_deep_sleep_start();
 
   Serial.begin(115200);
 
@@ -28,10 +28,17 @@ void setup()
   prefs.begin("adc-log", false);
   prefs.begin("index", false);
 
+  // print current voltage to terminal
+  // while (true)
+  // {
+  //   Serial.println( ((double) analogRead(ADC_PIN)) / 1000.0 * (3.3 / 2.0) );
+  //   delay(2000);
+  // }
+
   // Remove all preferences(logged values) under the opened namespace
   // prefs.clear(); // uncomment this to reset all values
   // Serial.println("Cleared prefs.");
-  // delay(20000);
+  // delay(30000);
 }
 
 bool isPrime(int32_t N)
