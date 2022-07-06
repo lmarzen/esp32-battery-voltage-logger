@@ -19,8 +19,8 @@ void reformat_nvs()
 
 void setup()
 {
-  esp_sleep_enable_timer_wakeup(60 * 30 * 1000000LL);
-  esp_deep_sleep_start();
+  // esp_sleep_enable_timer_wakeup(60 * 30 * 1000000LL);
+  // esp_deep_sleep_start();
 
   Serial.begin(115200);
 
